@@ -1,0 +1,198 @@
+<!-- Task is to make a cart having basic functionalities -->
+
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Document</title>
+    <style>
+      body {
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        flex-direction: column;
+      }
+      button {
+        height: 50px;
+        font-size: 12px;
+        width: 50px;
+        background-color: brown;
+        border-radius: 50%;
+        border: none;
+        margin: 20px;
+      }
+      input {
+        height: 50px;
+        font-size: 20px;
+        width: 200px;
+        border-bottom: 2px solid gray;
+        background-color: aqua;
+        border-radius: 20px;
+      }
+      .input {
+        display: flex;
+        flex-direction: column;
+      }
+      .topdisplay {
+        display: flex;
+        justify-content: space-around;
+        align-items: center;
+        margin: 50px;
+      }
+      .itemsdisplay {
+        display: flex;
+        justify-content: space-around;
+        align-items: center;
+        width: 60%;
+        font-size: 20px;
+        font-family: Impact, Haettenschweiler, "Arial Narrow Bold", sans-serif;
+        background-color: gray;
+        border-radius: 20px;
+        padding: 10px 20px;
+        margin: 10px 0;
+      }
+
+      .itemdisplay {
+        border-bottom: 2px solid lightseagreen;
+      }
+      .displayHeading {
+        display: flex;
+        justify-content: space-around;
+        align-items: center;
+        width: 60%;
+        height: 30px;
+        font-size: 20px;
+        font-family: "Courier New", Courier, monospace;
+        background-color: rgb(24, 142, 158);
+        border-radius: 20px;
+        padding: 10px 20px;
+      }
+    </style>
+  </head>
+  <body>
+    <!-- -------------------------- -->
+    <!-- <h2>TO DO LIST</h2>
+    <input type="text" id="itemName" placeholder="Item" />
+    <input type="number" id="quantity" placeholder="Quantity" />
+    <input type="number" id="rate" placeholder="Rate" />
+    <button onclick="addItems()">Add to cart</button>
+    <div id="message"></div>
+    <div id="itemdisplay" class="itemdisplay"></div>
+    <div id="total" class="itemdisplay"></div> -->
+
+    <!-- -------------------------- -->
+    <!-- -------------------------- -->
+    <h2>Cart Items</h2>
+    <div class="topdisplay">
+      <div class="input">
+        <input type="text" id="itemName" placeholder="Item" />
+        <input type="number" id="quantity" placeholder="Quantity" />
+        <input type="number" id="rate" placeholder="Rate" />
+        <button onclick="addItems()">Add to cart</button>
+      </div>
+      <div id="total" class="total"></div>
+    </div>
+    <div id="message"></div>
+    <div class="displayHeading">
+      <h3>Item</h3>
+      <h3>Quantity</h3>
+      <h3>Rate</h3>
+      <h3>Total</h3>
+    </div>
+    <div class="itemsdisplay">
+      <div class="itemdisplay" id="itemNamePlaceholder"></div>
+      <div class="itemdisplay" id="quantityPlaceholder"></div>
+      <div class="itemdisplay" id="ratePlaceholder"></div>
+      <div class="itemdisplay" id="totalAmount"></div>
+    </div>
+
+    <!-- -------------------------- -->
+
+    <script>
+      // -----------
+      let items = [];
+      render();
+
+      function addItems() {
+        let name = document.getElementById("itemName");
+        let quantity = document.getElementById("quantity");
+        let rate = document.getElementById("rate");
+
+        if (name.value === "") {
+          rendermessage("Please enter a valid Name", "message");
+          return;
+        }
+        if (quantity.value === "") {
+          rendermessage("Please enter a Quantity", "message");
+          return;
+        }
+        if (rate.value === "") {
+          rendermessage("Please enter a valid Rate", "message");
+          return;
+        }
+        items.push({
+          Name: name.value,
+          Quantity: quantity.value,
+          Rate: rate.value,
+        });
+        var val = document.getElementById("itemName");
+        val.value = "";
+        var val = document.getElementById("quantity");
+        val.value = "";
+        var val = document.getElementById("rate");
+        val.value = "";
+        updateList();
+        rendermessage("Item added successfully.", "message");
+      }
+
+      function updateList() {
+        var area = document.getElementById("itemNamePlaceholder");
+        area.innerHTML = "";
+        var area = document.getElementById("quantityPlaceholder");
+        area.innerHTML = "";
+        var area = document.getElementById("ratePlaceholder");
+        area.innerHTML = "";
+        var area = document.getElementById("totalAmount");
+        area.innerHTML = "";
+        render();
+      }
+      // renders the list()
+      function render() {
+        var total = 0;
+        items.forEach(function (item) {
+          let totalPrice = item.Quantity * item.Rate;
+
+          total += totalPrice;
+          let name = document.createElement("p");
+          name.innerText = item.Name;
+          document.getElementById("itemNamePlaceholder").appendChild(name);
+
+          let rate = document.createElement("p");
+          rate.innerText = item.Rate;
+          document.getElementById("ratePlaceholder").appendChild(rate);
+
+          let quantity = document.createElement("p");
+          quantity.innerText = item.Quantity;
+          document.getElementById("quantityPlaceholder").appendChild(quantity);
+
+          let sumItem = document.createElement("p");
+          sumItem.innerText = totalPrice;
+          document.getElementById("totalAmount").appendChild(sumItem);
+
+          var totalPlaceholder = document.createElement("p");
+          totalPlaceholder.innerText = total;
+          tot = document.getElementById("total");
+          tot.innerText = "Total Amount Payable=" + total;
+        });
+      }
+
+      function rendermessage(message, id) {
+        let placeholder = document.getElementById(id);
+        placeholder.innerText = message;
+      }
+      // -----------
+    </script>
+  </body>
+</html>
